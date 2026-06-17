@@ -17,9 +17,6 @@ return new class extends Migration
             $table->string('size');
             $table->string('color_name')->nullable();
             $table->string('color_hex')->nullable();
-            $table->string('sku')->nullable();
-            $table->decimal('price', 10, 2)->nullable();
-            $table->decimal('compare_price', 10, 2)->nullable();
             $table->integer('stock')->default(0);
             $table->boolean('is_default')->default(true);
             $table->boolean('is_active')->default(true);

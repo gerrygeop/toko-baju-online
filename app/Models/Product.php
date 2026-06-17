@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['name', 'slug', 'sku', 'description', 'price', 'stock', 'is_featured', 'is_new_arrival', 'is_active', 'sort_order'])]
+#[Fillable(['name', 'slug', 'thumbnail', 'sku', 'description', 'price', 'stock', 'is_featured', 'is_new_arrival', 'is_active', 'sort_order'])]
 class Product extends Model
 {
     protected function casts(): array
@@ -29,6 +29,11 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function brand(): BelongsTo
+    {
+        return $this->belongsTo(Brand::class);
+    }
+
     public function images(): HasMany
     {
         return $this->hasMany(ProductImage::class);
@@ -37,10 +42,5 @@ class Product extends Model
     public function variants(): HasMany
     {
         return $this->hasMany(ProductVariant::class);
-    }
-
-    public function orderItems(): HasMany
-    {
-        return $this->hasMany(OrderItem::class);
     }
 }
