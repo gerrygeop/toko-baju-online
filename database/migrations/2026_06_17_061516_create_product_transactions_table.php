@@ -14,12 +14,10 @@ return new class extends Migration
         Schema::create('product_transactions', function (Blueprint $table) {
             $table->id();
             $table->string('booking_trx_id')->unique();
-            $table->foreignId('product_variant_id')->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->string('phone');
             $table->string('email');
-            $table->integer('quantity')->default(1);
-            $table->decimal('subtotal_amount', 12, 2);
+            $table->decimal('total_item_amount', 12, 2);
             $table->foreignId('promo_code_id')->nullable()->constrained('promo_codes')->nullOnDelete();
             $table->decimal('discount_amount', 12, 2)->default(0);
             $table->decimal('grand_total', 12, 2);

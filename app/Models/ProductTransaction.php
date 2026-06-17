@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[Fillable([
     'booking_trx_id',
@@ -24,12 +26,12 @@ use Illuminate\Database\Eloquent\Model;
 ])]
 class ProductTransaction extends Model
 {
-    public function productVariant()
+    public function transactionItems(): HasMany
     {
-        return $this->belongsTo(ProductVariant::class);
+        return $this->hasMany(TransactionItem::class);
     }
 
-    public function promoCode()
+    public function promoCode(): BelongsTo
     {
         return $this->belongsTo(PromoCode::class);
     }
