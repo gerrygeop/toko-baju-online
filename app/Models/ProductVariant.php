@@ -9,6 +9,16 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 #[Fillable(['product_id', 'size', 'color_name', 'color_hex', 'stock', 'is_default', 'is_active'])]
 class ProductVariant extends Model
 {
+    protected $fillable = [
+        'product_id',
+        'size',
+        'color_name',
+        'color_hex',
+        'stock',
+        'is_default',
+        'is_active',
+    ];
+
     protected function casts(): array
     {
         return [

@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Products\Schemas;
 
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\ImageEntry;
+use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
@@ -17,30 +18,63 @@ class ProductInfolist
         return $schema
             ->columns(3)
             ->components([
-                Section::make()
-                    ->columns(2)
+                Group::make()
                     ->columnSpan(2)
                     ->schema([
-                        TextEntry::make('category.name')
-                            ->label('Category'),
-                        TextEntry::make('brand.name')
-                            ->label('Brand'),
-                        TextEntry::make('name'),
-                        TextEntry::make('slug'),
-                        ImageEntry::make('thumbnail')
-                            ->columnSpanFull(),
-                        TextEntry::make('sku')
-                            ->label('SKU')
-                            ->placeholder('-'),
-                        TextEntry::make('description')
-                            ->placeholder('-')
-                            ->formatStateUsing(fn(?string $state): HtmlString => new HtmlString($state ?? '-'))
-                            ->columnSpanFull(),
-                        TextEntry::make('price')
-                            ->money(),
-                        TextEntry::make('stock')
-                            ->numeric(),
 
+                        Section::make()
+                            ->columns(2)
+                            ->columnSpan(2)
+                            ->schema([
+                                TextEntry::make('category.name')
+                                    ->label('Category'),
+                                TextEntry::make('brand.name')
+                                    ->label('Brand'),
+                                TextEntry::make('name'),
+                                TextEntry::make('slug'),
+
+                                TextEntry::make('sku')
+                                    ->label('SKU')
+                                    ->placeholder('-'),
+                                TextEntry::make('description')
+                                    ->placeholder('-')
+                                    ->formatStateUsing(fn(?string $state): HtmlString => new HtmlString($state ?? '-'))
+                                    ->columnSpanFull(),
+                                TextEntry::make('price')
+                                    ->money('IDR', true),
+                                TextEntry::make('stock')
+                                    ->numeric(),
+                            ]),
+
+                        Section::make()
+                            ->columns(2)
+                            ->columnSpan(2)
+                            ->schema([
+                                ImageEntry::make('thumbnail')
+                                    ->columnSpanFull(),
+
+                                ImageEntry::make('images.image_path') // Relasi 'productImages' dan kolom 'image_path'
+                                    ->label('Galeri Foto Produk')
+                                    // ->visibility('public')
+                                    ->columnSpanFull(),
+                            ]),
+
+                        Section::make()
+                            ->columns(2)
+                            ->columnSpan(2)
+                            ->schema([
+                                RepeatableEntry::make('variants')
+                                    ->label('Varian Produk')
+                                    ->schema([
+                                        TextEntry::make('size'),
+                                        TextEntry::make('color_name')
+                                            ->label('Color'),
+                                        TextEntry::make('stock')
+                                            ->numeric(),
+                                    ])
+                                    ->columns(3)
+                                    ->columnSpanFull(),
+                            ]),
                     ]),
 
                 Group::make()
