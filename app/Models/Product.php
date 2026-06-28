@@ -6,9 +6,24 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['name', 'slug', 'thumbnail', 'sku', 'description', 'price', 'stock', 'is_featured', 'is_new_arrival', 'is_active', 'sort_order'])]
 class Product extends Model
 {
+    protected $fillable = [
+        'category_id',
+        'brand_id',
+        'name',
+        'slug',
+        'thumbnail',
+        'sku',
+        'description',
+        'price',
+        'stock',
+        'is_featured',
+        'is_new_arrival',
+        'is_active',
+        'sort_order',
+    ];
+
     protected function casts(): array
     {
         return [
@@ -18,11 +33,6 @@ class Product extends Model
             'is_active' => 'boolean',
         ];
     }
-
-    protected $appends = [
-        'final_price',
-        'discounted_percent',
-    ];
 
     public function category(): BelongsTo
     {
