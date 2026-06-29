@@ -13,20 +13,22 @@ return new class extends Migration
     {
         Schema::create('product_transactions', function (Blueprint $table) {
             $table->id();
-            $table->string('booking_trx_id')->unique();
-            $table->string('name');
-            $table->string('phone');
-            $table->string('email');
-            $table->decimal('total_item_amount', 12, 2);
-            $table->foreignId('promo_code_id')->nullable()->constrained('promo_codes')->nullOnDelete();
-            $table->decimal('discount_amount', 12, 2)->default(0);
-            $table->decimal('grand_total', 12, 2);
-            $table->text('address');
-            $table->string('postal_code');
-            $table->string('city');
-            $table->boolean('is_paid')->default(false);
-            $table->string('payment_method')->nullable();
-            $table->string('proof_of_payment')->nullable();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('transaction_code')->unique();
+
+            // Kolom Keuangan yang disederhanakan
+            $table->unsignedBigInteger('total_price');    // Total harga semua item baju
+            $table->unsignedBigInteger('shipping_cost');   // Ongkos kirim
+            $table->unsignedBigInteger('grand_total');     // total_price + shipping_cost
+
+            // Informasi Pengiriman & Pembayaran
+            $table->text('shipping_address');
+            $table->string('payment_method');
+            $table->string('payment_proof')->nullable();   // Bukti transfer manual
+
+            // Status & Catatan
+            $table->string('status')->default('pending');  // pending, paid, shipping, completed, cancelled
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }
