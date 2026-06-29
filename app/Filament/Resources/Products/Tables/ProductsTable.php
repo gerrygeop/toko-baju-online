@@ -38,7 +38,7 @@ class ProductsTable
                     ->label('SKU')
                     ->searchable(),
                 TextColumn::make('price')
-                    ->money()
+                    ->money('IDR', true)
                     ->sortable(),
                 TextColumn::make('stock')
                     ->numeric()

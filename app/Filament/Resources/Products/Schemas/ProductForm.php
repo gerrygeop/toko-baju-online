@@ -23,7 +23,7 @@ class ProductForm
                 Group::make()
                     ->columnSpan(2)
                     ->schema([
-                        Section::make()
+                        Section::make('Product Details')
                             ->columns(2)
                             ->columnSpan(2)
                             ->schema([
@@ -39,7 +39,7 @@ class ProductForm
                                     ->columnSpanFull(),
                             ]),
 
-                        Section::make()
+                        Section::make('Inventory & Pricing')
                             ->columns(2)
                             ->columnSpan(2)
                             ->schema([
@@ -48,17 +48,18 @@ class ProductForm
                                 TextInput::make('price')
                                     ->required()
                                     ->numeric()
-                                    ->prefix('$'),
+                                    ->prefix('Rp'),
                                 TextInput::make('stock')
                                     ->required()
                                     ->numeric()
                                     ->default(0),
                             ]),
 
-                        Section::make()
+                        Section::make('Media')
                             ->columnSpan(2)
                             ->schema([
                                 FileUpload::make('thumbnail')
+                                    ->label('Product Thumbnail')
                                     ->image()
                                     ->directory('products/thumbnails') // Folder penyimpanan di storage/app/public
                                     ->imageEditor()
@@ -75,13 +76,13 @@ class ProductForm
                                             ->imageEditor(), // Opsional: Agar admin bisa crop/edit foto sebelum upload
                                     ])
                                     ->grid(3) // Membuat tampilan repeater rapi menyamping (grid 3 kolom)
-                                    ->label('Galeri Foto Produk')
+                                    ->label('Product Images')
                                     ->defaultItems(1)
                                     ->addActionLabel('Add Product Image')
                                     ->collapsible(),
                             ]),
 
-                        Section::make()
+                        Section::make('Product Variants')
                             ->columnSpan(2)
                             ->schema([
                                 Repeater::make('variants') // 1. Harus sama dengan nama fungsi relasi di model Product
@@ -129,7 +130,7 @@ class ProductForm
                 Group::make()
                     ->columnSpan(1)
                     ->schema([
-                        Section::make()
+                        Section::make('Product Status & Sort Order')
                             ->schema([
                                 Toggle::make('is_featured')
                                     ->belowContent('Featured products will be highlighted on the homepage and in product listings.')
@@ -148,7 +149,7 @@ class ProductForm
                                     ->default(0),
                             ]),
 
-                        Section::make('Associations')
+                        Section::make('Category & Brand')
                             ->schema([
                                 Select::make('category_id')
                                     ->relationship('category', 'name')
