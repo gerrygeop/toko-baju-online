@@ -19,7 +19,7 @@ export interface ProductTransaction {
     shipping_cost: number;
     grand_total: number;
     shipping_address: string;
-    status: string;
+    status: 'pending' | 'paid' | 'shipping' | 'completed' | 'cancelled';
     transactionItems: TransactionItem[];
     created_at: string;
 }
