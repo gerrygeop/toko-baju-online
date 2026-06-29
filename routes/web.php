@@ -10,6 +10,8 @@ Route::get('/products/{slug}', [ProductController::class, 'show'])->name('produc
 Route::inertia('/cart', 'Cart')->name('cart');
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/checkout', [\App\Http\Controllers\CheckoutController::class, 'index'])->name('checkout.index');
+    Route::post('/checkout', [\App\Http\Controllers\CheckoutController::class, 'store'])->name('checkout.store');
     Route::inertia('dashboard', 'dashboard')->name('dashboard');
 });
 
