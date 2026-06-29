@@ -6,6 +6,8 @@ use App\Repositories\OrderRepository;
 use App\Repositories\OrderRepositoryInterface;
 use App\Services\CheckoutService;
 use App\Services\CheckoutServiceInterface;
+use App\Services\OrderService;
+use App\Services\OrderServiceInterface;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
@@ -21,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(OrderRepositoryInterface::class, OrderRepository::class);
         $this->app->bind(CheckoutServiceInterface::class, CheckoutService::class);
+        $this->app->bind(OrderServiceInterface::class, OrderService::class);
     }
 
     /**
