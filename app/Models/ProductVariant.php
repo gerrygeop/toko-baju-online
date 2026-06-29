@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['product_id', 'size', 'color_name', 'color_hex', 'stock', 'is_default', 'is_active'])]
 class ProductVariant extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'product_id',
         'size',
