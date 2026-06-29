@@ -7,6 +7,7 @@ Route::inertia('/', 'welcome')->name('home');
 
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
+Route::inertia('/cart', 'Cart')->name('cart');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::inertia('dashboard', 'dashboard')->name('dashboard');
