@@ -14,13 +14,13 @@ class HomeController extends Controller
     {
         $categories = Category::query()
             ->where('is_active', true)
-            ->orderBy('name')
+            ->orderBy('name', 'asc')
             ->limit(6)
             ->get(['id', 'name', 'slug', 'icon']);
 
         $brands = Brand::query()
             ->where('is_active', true)
-            ->orderBy('name')
+            ->orderBy('name', 'asc')
             ->limit(8)
             ->get(['id', 'name', 'slug', 'logo']);
 

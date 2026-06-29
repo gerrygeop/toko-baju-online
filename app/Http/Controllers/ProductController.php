@@ -19,7 +19,7 @@ class ProductController extends Controller
                 $search !== '',
                 fn($query) => $query->where('name', 'like', "%{$search}%"),
             )
-            ->orderBy('sort_order')
+            ->orderBy('sort_order', 'asc')
             ->get();
 
         return Inertia::render('Products/Index', [
@@ -30,7 +30,8 @@ class ProductController extends Controller
 
     public function show(string $slug)
     {
-        $product = Product::where('slug', $slug)
+        $product = Product::query()
+            ->where('slug', $slug)
             ->where('is_active', true)
             ->with(['category', 'brand', 'productImages', 'variants'])
             ->firstOrFail();

@@ -2,10 +2,10 @@
 
 namespace App\Filament\Resources\ProductTransactions\Schemas;
 
+use App\Enums\ProductTransactionStatus;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\ToggleButtons;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
@@ -54,23 +54,9 @@ class ProductTransactionForm
                         TextInput::make('payment_method'),
                         TextInput::make('proof_of_payment'),
 
-                        ToggleButtons::make('status')
+                        Select::make('status')
                             ->required()
-                            ->inline()
-                            ->options([
-                                'pending' => 'Pending',
-                                'paid' => 'Paid',
-                                'shipping' => 'Shipping',
-                                'completed' => 'Completed',
-                                'cancelled' => 'Cancelled',
-                            ])
-                            ->colors([
-                                'warning' => 'Pending',
-                                'primary' => 'Paid',
-                                'info' => 'Shipping',
-                                'success' => 'Completed',
-                                'danger' => 'Cancelled',
-                            ]),
+                            ->options(ProductTransactionStatus::class),
 
                         Textarea::make('notes')
                             ->columnSpanFull(),

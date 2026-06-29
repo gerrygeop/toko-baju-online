@@ -40,14 +40,7 @@ class ProductTransactionsTable
                     ->sortable(),
 
                 TextColumn::make('status')
-                    ->badge()
-                    ->colors([
-                        'warning' => 'Pending',
-                        'primary' => 'Paid',
-                        'info' => 'Shipping',
-                        'success' => 'Completed',
-                        'danger' => 'Cancelled',
-                    ]),
+                    ->badge(),
 
                 TextColumn::make('created_at')
                     ->dateTime()

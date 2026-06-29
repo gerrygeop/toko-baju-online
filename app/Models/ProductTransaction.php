@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ProductTransactionStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -22,6 +23,10 @@ class ProductTransaction extends Model
         'payment_proof',
         'status',
         'notes',
+    ];
+
+    protected $casts = [
+        'status' => ProductTransactionStatus::class,
     ];
 
     public function transactionItems(): HasMany

@@ -17,15 +17,7 @@ class ProductTransactionInfolist
                     ->schema([
                         TextEntry::make('transaction_code'),
                         TextEntry::make('status')
-                            ->badge()
-                            ->colors([
-                                'warning' => 'Pending',
-                                'primary' => 'Paid',
-                                'info' => 'Shipping',
-                                'success' => 'Completed',
-                                'danger' => 'Cancelled',
-
-                            ]),
+                            ->badge(),
                         TextEntry::make('total_price')
                             ->money('IDR', true),
                         TextEntry::make('shipping_cost')
