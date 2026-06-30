@@ -104,7 +104,7 @@ export default function OrdersIndex({ orders }: OrdersIndexProps) {
                                                 </td>
                                                 <td className="px-6 py-5">
                                                     <span
-                                                        className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${statusStyles[order.status] ?? 'bg-slate-100 text-slate-800'}`}
+                                                        className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold capitalize ${statusStyles[order.status] ?? 'bg-slate-100 text-slate-800'}`}
                                                     >
                                                         {statusLabel}
                                                     </span>
