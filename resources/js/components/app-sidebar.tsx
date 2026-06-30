@@ -1,5 +1,11 @@
-import { Link } from '@inertiajs/react';
-import { LayoutGrid, Shirt } from 'lucide-react';
+import { Link, usePage } from '@inertiajs/react';
+import {
+    Home,
+    LayoutGrid,
+    ListChecks,
+    Shirt,
+    ShoppingCart,
+} from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
@@ -13,6 +19,7 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
+import { useCart } from '@/Contexts/CartContext';
 import type { NavItem } from '@/types';
 
 const mainNavItems: NavItem[] = [
@@ -29,6 +36,30 @@ const mainNavItems: NavItem[] = [
 ];
 
 export function AppSidebar() {
+    const page = usePage<any>();
+    const { auth } = page.props;
+    const { cartCount } = useCart();
+
+    const mainNavItems: NavItem[] = [
+        ...(auth.user
+            ? [
+                  { title: 'Dashboard', href: dashboard(), icon: LayoutGrid },
+                  {
+                      title: 'Riwayat Pesanan Saya',
+                      href: '/orders',
+                      icon: ListChecks,
+                  },
+              ]
+            : []),
+        { title: 'Katalog Produk', href: '/products', icon: Shirt },
+        {
+            title: 'Keranjang Belanja',
+            href: '/cart',
+            icon: ShoppingCart,
+            badge: cartCount,
+        },
+    ];
+
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>

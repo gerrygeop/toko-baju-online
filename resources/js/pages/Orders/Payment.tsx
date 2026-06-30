@@ -1,5 +1,12 @@
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
-import { useMemo, type ChangeEvent, useState } from 'react';
+import {
+    useEffect,
+    useMemo,
+    type ChangeEvent,
+    type FormEvent,
+    useState,
+} from 'react';
+import { toast } from 'sonner';
 import { type ProductTransaction } from '../../types/orders';
 
 interface OrdersPaymentProps {
@@ -14,6 +21,12 @@ export default function OrdersPayment({ order }: OrdersPaymentProps) {
     const [progress, setProgress] = useState(0);
     const successMessage = page.props.flash?.success as string | undefined;
 
+    useEffect(() => {
+        if (successMessage) {
+            toast.success(successMessage);
+        }
+    }, [successMessage]);
+
     const totalAmount = useMemo(() => order.grand_total, [order.grand_total]);
 
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -21,7 +34,7 @@ export default function OrdersPayment({ order }: OrdersPaymentProps) {
         form.setData('payment_proof', file);
     };
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         form.post(`/orders/${order.id}/upload-payment`, {
@@ -62,6 +75,14 @@ export default function OrdersPayment({ order }: OrdersPaymentProps) {
                             <li>
                                 Transfer sejumlah Rp{' '}
                                 {totalAmount.toLocaleString('id-ID')}.
+                            </li>
+                            <li>
+                                Transfer ke rekening berikut:
+                                <div className="mt-1 rounded-2xl bg-slate-100 p-3 text-sm text-slate-900">
+                                    <p className="font-semibold">Bank BCA</p>
+                                    <p>1234567890</p>
+                                    <p>PT. Toko Bajuqu</p>
+                                </div>
                             </li>
                             <li>
                                 Gunakan nomor invoice berikut sebagai keterangan

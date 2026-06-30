@@ -1,6 +1,14 @@
 import { Link, usePage } from '@inertiajs/react';
 import { useEffect, useRef, useState } from 'react';
-import { LayoutGrid, Menu, Search, ShoppingCart } from 'lucide-react';
+import {
+    Home,
+    LayoutGrid,
+    ListChecks,
+    Menu,
+    Search,
+    ShoppingBag,
+    ShoppingCart,
+} from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import AppLogoIcon from '@/components/app-logo-icon';
 import { Breadcrumbs } from '@/components/breadcrumbs';
@@ -36,14 +44,6 @@ type Props = {
     breadcrumbs?: BreadcrumbItem[];
 };
 
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard(),
-        icon: LayoutGrid,
-    },
-];
-
 const activeItemStyles =
     'text-neutral-900 dark:bg-neutral-800 dark:text-neutral-100';
 
@@ -55,6 +55,18 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
     const { cartCount } = useCart();
     const [isCartPulsing, setIsCartPulsing] = useState(false);
     const previousCartCount = useRef(cartCount);
+
+    const mainNavItems: NavItem[] = [
+        { title: 'Beranda', href: '/', icon: Home },
+        { title: 'Katalog Produk', href: '/products', icon: ShoppingBag },
+        { title: 'Keranjang Belanja', href: '/cart', icon: ShoppingCart },
+        ...(auth.user
+            ? [
+                  { title: 'Dashboard', href: dashboard(), icon: LayoutGrid },
+                  { title: 'Pesanan Saya', href: '/orders', icon: ListChecks },
+              ]
+            : []),
+    ];
 
     useEffect(() => {
         if (cartCount > previousCartCount.current) {
@@ -116,7 +128,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                     </div>
 
                     <Link
-                        href={dashboard()}
+                        href="/"
                         prefetch
                         className="flex items-center space-x-2"
                     >

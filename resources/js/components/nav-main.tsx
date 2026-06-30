@@ -24,8 +24,17 @@ export function NavMain({ items = [] }: { items: NavItem[] }) {
                             tooltip={{ children: item.title }}
                         >
                             <Link href={item.href} prefetch>
-                                {item.icon && <item.icon />}
-                                <span>{item.title}</span>
+                                <div className="flex items-center justify-between gap-2">
+                                    <span className="flex items-center gap-2">
+                                        {item.icon && <item.icon />}
+                                        {item.title}
+                                    </span>
+                                    {item.badge && item.badge > 0 ? (
+                                        <span className="rounded-full bg-red-600 px-2 py-0.5 text-[0.65rem] font-semibold text-white">
+                                            {item.badge}
+                                        </span>
+                                    ) : null}
+                                </div>
                             </Link>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
