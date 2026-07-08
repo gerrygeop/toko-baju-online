@@ -26,8 +26,9 @@ class CheckoutController extends Controller
                 $request->user()->id,
             );
 
-            return Redirect::route('checkout.index')
-                ->with('invoice_code', $transaction->transaction_code);
+            return Redirect::route('orders.payment', [
+                'transaction_code' => $transaction->transaction_code,
+            ])->with('success', 'Pesanan berhasil dibuat! Silakan lakukan transfer.');
         } catch (\Throwable $exception) {
             return Redirect::back()->withErrors([
                 'cart_items' => $exception->getMessage(),

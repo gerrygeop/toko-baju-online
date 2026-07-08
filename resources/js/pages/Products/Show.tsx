@@ -1,5 +1,6 @@
-import { Head } from '@inertiajs/react';
-import { useMemo, useState, type ChangeEvent } from 'react';
+import { Head, Link, router } from '@inertiajs/react';
+import { toast } from 'sonner';
+import { useMemo, useState } from 'react';
 import { useCart } from '@/Contexts/CartContext';
 
 interface ProductVariantItem {
@@ -104,12 +105,32 @@ export default function ProductsShow({ product }: ProductsShowProps) {
                 '/images/placeholder.svg',
             maksimal_stok_varian: selectedVariant.stock,
         });
+
+        toast.success('Produk berhasil ditambahkan ke keranjang.', {
+            duration: 3000,
+            action: {
+                label: 'Lihat Keranjang',
+                onClick: () => router.visit('/cart'),
+            },
+        });
     };
 
     return (
         <>
             <Head title={product.name} />
-            <div className="space-y-8 px-4 py-6 sm:px-6 lg:px-8">
+            <div className="mx-auto max-w-7xl space-y-8 px-4 py-12 sm:px-6 lg:px-8">
+                <div className="flex items-center justify-between rounded-3xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-950">
+                    <Link
+                        href="/products"
+                        className="inline-flex items-center rounded-2xl border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-slate-900 transition hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800"
+                    >
+                        ← Kembali ke Katalog
+                    </Link>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">
+                        Pilih varian dan tambahkan ke keranjang kamu.
+                    </p>
+                </div>
+
                 <div className="grid gap-8 xl:grid-cols-[1.2fr_0.8fr]">
                     <div className="space-y-6">
                         <div className="grid gap-3 sm:grid-cols-2">

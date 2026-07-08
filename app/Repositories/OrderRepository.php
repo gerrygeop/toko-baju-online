@@ -28,7 +28,10 @@ class OrderRepository implements OrderRepositoryInterface
 
     public function getOrderHistory(int $userId)
     {
-        return ProductTransaction::with(['transactionItems.product'])
+        return ProductTransaction::with([
+            'transactionItems.product',
+            'transactionItems.productVariant',
+        ])
             ->where('user_id', $userId)
             ->orderByDesc('created_at')
             ->get();
@@ -36,7 +39,10 @@ class OrderRepository implements OrderRepositoryInterface
 
     public function getOrderByTransactionCode(string $transactionCode, int $userId): ?ProductTransaction
     {
-        return ProductTransaction::with(['transactionItems.product'])
+        return ProductTransaction::with([
+            'transactionItems.product',
+            'transactionItems.productVariant',
+        ])
             ->where('transaction_code', $transactionCode)
             ->where('user_id', $userId)
             ->first();

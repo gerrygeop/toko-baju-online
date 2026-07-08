@@ -1,7 +1,12 @@
-import { Link } from '@inertiajs/react';
-import { BookOpen, FolderGit2, LayoutGrid } from 'lucide-react';
+import { Link, usePage } from '@inertiajs/react';
+import {
+    Home,
+    LayoutGrid,
+    ListChecks,
+    Shirt,
+    ShoppingCart,
+} from 'lucide-react';
 import AppLogo from '@/components/app-logo';
-import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import {
@@ -14,6 +19,7 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
+import { useCart } from '@/Contexts/CartContext';
 import type { NavItem } from '@/types';
 
 const mainNavItems: NavItem[] = [
@@ -22,29 +28,45 @@ const mainNavItems: NavItem[] = [
         href: dashboard(),
         icon: LayoutGrid,
     },
-];
-
-const footerNavItems: NavItem[] = [
     {
-        title: 'Repository',
-        href: 'https://github.com/laravel/react-starter-kit',
-        icon: FolderGit2,
-    },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#react',
-        icon: BookOpen,
+        title: 'Katalog Produk',
+        href: '/products',
+        icon: Shirt,
     },
 ];
 
 export function AppSidebar() {
+    const page = usePage<any>();
+    const { auth } = page.props;
+    const { cartCount } = useCart();
+
+    const mainNavItems: NavItem[] = [
+        ...(auth.user
+            ? [
+                  { title: 'Dashboard', href: dashboard(), icon: LayoutGrid },
+                  {
+                      title: 'Riwayat Pesanan Saya',
+                      href: '/orders',
+                      icon: ListChecks,
+                  },
+              ]
+            : []),
+        { title: 'Katalog Produk', href: '/products', icon: Shirt },
+        {
+            title: 'Keranjang Belanja',
+            href: '/cart',
+            icon: ShoppingCart,
+            badge: cartCount,
+        },
+    ];
+
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <Link href={dashboard()} prefetch>
+                            <Link href="/" prefetch>
                                 <AppLogo />
                             </Link>
                         </SidebarMenuButton>
@@ -57,7 +79,6 @@ export function AppSidebar() {
             </SidebarContent>
 
             <SidebarFooter>
-                <NavFooter items={footerNavItems} className="mt-auto" />
                 <NavUser />
             </SidebarFooter>
         </Sidebar>

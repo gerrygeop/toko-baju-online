@@ -17,7 +17,7 @@ enum ProductTransactionStatus: string implements HasLabel, HasColor
     {
         return match ($this) {
             self::Pending => 'Menunggu Pembayaran',
-            self::Paid => 'Sudah Diverifikasi',
+            self::Paid => 'Sudah Bayar',
             self::Shipping => 'Sedang Dikirim',
             self::Completed => 'Selesai',
             self::Cancelled => 'Dibatalkan',

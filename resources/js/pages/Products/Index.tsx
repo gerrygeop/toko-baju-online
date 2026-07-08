@@ -17,23 +17,32 @@ interface ProductIndexItem {
 interface ProductsIndexProps {
     products: ProductIndexItem[];
     search?: string;
+    category?: string;
+    categories: { id: number; name: string }[];
 }
 
 export default function ProductsIndex({
     products,
     search,
+    category: selectedCategory,
+    categories,
 }: ProductsIndexProps) {
     const [query, setQuery] = useState(search ?? '');
+    const [category, setCategory] = useState(selectedCategory ?? '');
 
     const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
         setQuery(event.target.value);
+    };
+
+    const handleCategoryChange = (event: ChangeEvent<HTMLSelectElement>) => {
+        setCategory(event.target.value);
     };
 
     return (
         <>
             <Head title="Product Catalog" />
 
-            <div className="space-y-6 px-4 py-6 sm:px-6 lg:px-8">
+            <div className="mx-auto max-w-7xl space-y-6 px-4 py-12 sm:px-6 lg:px-8">
                 <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                     <div>
                         <h1 className="text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
@@ -45,10 +54,30 @@ export default function ProductsIndex({
                     </div>
 
                     <form
-                        className="flex w-full max-w-md items-center gap-2 md:w-auto"
+                        className="flex w-full max-w-2xl flex-col gap-2 md:flex-row md:items-center md:justify-end"
                         method="get"
                         action="/products"
                     >
+                        <div className="flex w-full items-center gap-2 md:max-w-xs">
+                            <label htmlFor="category" className="sr-only">
+                                Filter kategori
+                            </label>
+                            <select
+                                id="category"
+                                name="category"
+                                value={category}
+                                onChange={handleCategoryChange}
+                                className="w-full rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm text-slate-900 shadow-sm transition outline-none focus:border-slate-300 focus:ring-2 focus:ring-slate-200 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:focus:border-slate-600 dark:focus:ring-slate-700"
+                            >
+                                <option value="">Semua Kategori</option>
+                                {categories.map((item) => (
+                                    <option key={item.id} value={item.id}>
+                                        {item.name}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+
                         <label htmlFor="search" className="sr-only">
                             Cari produk
                         </label>

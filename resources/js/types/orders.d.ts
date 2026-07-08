@@ -3,6 +3,12 @@ export interface Product {
     name: string;
 }
 
+export interface ProductVariant {
+    id: number;
+    color_name?: string | null;
+    size?: string | null;
+}
+
 export interface TransactionItem {
     id: number;
     product_id: number;
@@ -10,6 +16,8 @@ export interface TransactionItem {
     quantity: number;
     price: number;
     product?: Product | null;
+    productVariant?: ProductVariant | null;
+    product_variant?: ProductVariant | null;
 }
 
 export interface ProductTransaction {
@@ -17,9 +25,12 @@ export interface ProductTransaction {
     transaction_code: string;
     total_price: number;
     shipping_cost: number;
+    notes: string | null;
     grand_total: number;
     shipping_address: string;
-    status: string;
-    transactionItems: TransactionItem[];
+    status: 'pending' | 'paid' | 'shipping' | 'completed' | 'cancelled';
+    payment_proof?: string | null;
+    transactionItems?: TransactionItem[];
+    transaction_items?: TransactionItem[];
     created_at: string;
 }
