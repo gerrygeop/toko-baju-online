@@ -1,8 +1,6 @@
 # Toko Bajuqu
 
-<p align="center">
-  <img src="preview.png" alt="Toko Bajuqu preview" width="800" />
-</p>
+![Toko Bajuqu preview](preview.png)
 
 Aplikasi e-commerce toko pakaian yang lengkap dengan katalog produk, keranjang, checkout, dan panel admin berbasis Laravel 13 serta frontend Inertia.js + React.
 
